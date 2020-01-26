@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from property.models import Property
 
 # Create your views here.
 
@@ -6,11 +7,10 @@ from django.shortcuts import render
 
 
 def index(request):
-    # projectlist = Project.objects.all()
+    proplist = Property.objects.order_by('-created')[:8]
     template = 'front/index.html'
-    # context = {'project_list' : projectlist }
-
-    return render(request, template)
+    context = {'prop_list': proplist}
+    return render(request, template, context)
 
 
 """ ABOUT FUNCTION FOR ABOUT PAGE """

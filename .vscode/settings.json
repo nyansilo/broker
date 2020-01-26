@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "/opt/anaconda3/envs/MyDjangoEnv/bin/python"
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "python.pythonPath": "/opt/anaconda3/envs/MyDjangoEnv/bin/python",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
 }
