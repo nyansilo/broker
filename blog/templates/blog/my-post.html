@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>My Posts</h2>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="{% url 'user_profile' %}">My Profile</a></li>
+                        <li>My Posts</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Content
+================================================== -->
+<div class="container">
+    <div class="row">
+
+
+        <!-- Sidebar Widgets -->
+        {%  include 'blog/_sidebar_user_post.html' %}
+        <!-- Sidebar / End -->
+
+        <div class="col-md-8">
+            <a href="{% url 'blog:post_create' %}" class="margin-bottom-30 button border">Create Post</a>
+            <table class="manage-table responsive-table">
+
+                <tr>
+                    <th><i class="fa fa-file-text"></i> Posts</th>
+                    <th class="expire-date"><i class="fa fa-calendar"></i> Post Date</th>
+                    <th>Action</th>
+                </tr>
+
+                <!-- Item #1 -->
+                {% for post in post_list %}
+                <tr>
+                    <td class="title-container">
+                        <img src="{{ post.thumbnail.url }}" alt="">
+                        <div class="title">
+                            <h4><a href="{{ post.get_absolute_url }}">{{ post.title|truncatechars:30}}</a></h4>
+                            <span>{{ post.overview|truncatechars:20}} </span>
+                            <span class="table-property-price">By: {{ post.author.user.username }} </span>
+                        </div>
+                    </td>
+                    <td class="expire-date">{{ post.timestamp|date:'F d, Y'}}</td>
+                    {% if request.user.is_staff %}
+                    <td class="action">
+                        <a href="{{ post.get_absolute_url }}"><i class="fa  fa-eye"></i> View</a>
+                        <a href="{% url 'blog:post_update' slug=post.slug %}"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="{% url 'blog:post_delete' slug=post.slug  %}" class="delete"><i
+                                class="fa fa-remove"></i>
+                            Delete</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+
+
+            </table>
+            <a href="{% url 'blog:post_create' %}" class="margin-top-40 button">Create Post</a>
+        </div>
+
+
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+You received a message from your contact form, from the user:
+{{ user }}
+{{ message }}
+
+Reply to this email:
+
+{{ email }}

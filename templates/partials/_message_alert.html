@@ -1,0 +1,10 @@
+{% if messages %}
+{% for message in  messages %}
+
+<div class="notification {{ message.tags }} closeable">
+    <p><span>{{ message.tags }}!</span> {{ message }}.</p>
+    <a class="close"></a>
+</div>
+
+{% endfor %}
+{% endif %}

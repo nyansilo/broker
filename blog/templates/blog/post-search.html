@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>Search Results</h2>
+                <span>Here the search results found for the inqury</span>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li>Search</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Content
+================================================== -->
+<div class="container">
+
+    <!-- Blog Posts -->
+    <div class="blog-page">
+        <div class="row">
+            <div class="col-md-8">
+
+                {% for post in post_search %}
+
+                <!-- Blog Post -->
+                <div class="blog-post">
+
+                    <!-- Img -->
+                    <a href="{{ post.get_absolute_url }}" class="post-img">
+                        <img src="{{ post.thumbnail.url }}" alt="">
+                    </a>
+
+                    <!-- Content -->
+                    <div class="post-content">
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title}}</a></h3>
+
+
+                        <ul class="post-meta">
+                            <li> <i class="fa fa-user"></i> {{ post.author.user.username }}</li>
+                            <li> <i class="fa fa-clock-o"></i> {{ post.timestamp|naturaltime}}</li>
+                            <li> <i class="fa fa-comments"></i><a href="#"> {{ post.comments.count}}</a></li>
+                            <i class="fa fa-list-alt"></i>
+                            {% for cat in post.categories.all %}
+                            <li> </i><a href="#"> {{ cat }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                        <p>{{ post.overview|truncatechars:255}}</p>
+
+                        <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i
+                                class="fa fa-angle-right"></i></a>
+                    </div>
+
+                </div>
+                <!-- Blog Post / End -->
+                {% endfor %}
+
+                <!-- Pagination -->
+                <div class="clearfix"></div>
+                {% if post_search.has_other_pages %}
+                <!-- Pagination -->
+                <div class="pagination-container">
+
+
+                    <nav class="pagination">
+                        <ul>
+                            {% for i in post_search.paginator.page_range %}
+                            {% if post_search.number == i %}
+                            <li><a class="current-page">{{i}}</a></li>
+                            {% else %}
+                            <li><a href="?{{ page_request_var }}={{i}}">{{i}}</a></li>
+                            {% comment %}
+                            <li class="blank">...</li>
+                            <li><a href="?{{ page_request_var }}={{i.previous_page_number }}">22</a></li>
+                            {% endcomment %}
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+
+                    <nav class="pagination-next-prev">
+                        <ul>
+                            {% if post_search.has_previous %}
+                            <li><a href="?{{ page_request_var }}={{ post_search.previous_page_number }}"
+                                    class="prev">Previous</a></li>
+                            {% else %}
+                            <li class="disabled"></li>
+                            {% endif %}
+
+                            {% if post_search.has_next %}
+                            <li><a href="?{{ page_request_var }}={{ post_search.next_page_number }}"
+                                    class="next">Next</a>
+                            </li>
+                            {% else %}
+                            <li class="disabled"></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Pagination / End -->
+                {% endif %}
+                <div class="clearfix"></div>
+
+            </div>
+
+            <!-- Blog Posts / End -->
+
+
+            <!-- Widgets -->
+            <div class="col-md-4">
+                <div class="sidebar right">
+
+
+                    <!-- Widget -->
+                    <div class="widget">
+
+                        <h3>Popular Posts</h3>
+                        <ul class="widget-tabs">
+
+                            {% for latest in post_latest %}
+
+                            <!-- Post #1 -->
+                            <li>
+                                <div class="widget-content">
+                                    <div class="widget-thumb">
+                                        <a href="{{ post.get_absolute_url }}"><img src="{{ latest.thumbnail.url }}"
+                                                alt=""></a>
+                                    </div>
+
+                                    <div class="widget-text">
+                                        <h5><a href="{{ post.get_absolute_url }}">{{ latest.title|truncatechars:35}}</a>
+                                        </h5>
+
+                                        <span><i class="fa fa-eye"></i> {{ latest.view_count}} |
+                                            <i class="fa fa-comments"></i> {{ latest.comments.count}} </span>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                            </li>
+                            {% endfor %}
+
+
+                        </ul>
+
+                    </div>
+                    <!-- Widget / End-->
+
+
+
+                    <!-- Widget -->
+                    <div class="widget">
+                        <h3>Got any questions?</h3>
+                        <div class="info-box margin-bottom-10">
+                            <p>If you are having any questions, please feel free to ask.</p>
+                            <a href="{% url 'front:contact' %}" class="button fullwidth margin-top-20"><i
+                                    class="fa fa-envelope-o"></i> Drop Us a Line</a>
+                        </div>
+                    </div>
+                    <!-- Widget / End -->
+
+                    <!-- Widget -->
+                    <div class="widget">
+                        <h3 class="margin-top-0 margin-bottom-25">Social</h3>
+                        <ul class="social-icons rounded">
+                            <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                            <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
+                        </ul>
+
+                    </div>
+                    <!-- Widget / End-->
+
+                    <div class="clearfix"></div>
+                    <div class="margin-bottom-40"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar / End -->
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}

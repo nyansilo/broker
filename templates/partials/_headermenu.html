@@ -102,7 +102,7 @@
 
                         <li>
                             <a {% if 'blog' in request.path %} class="current" {% else %}
-                                href="{% url 'blog:bloglist' %}" {% endif %}>
+                                href="{% url 'blog:blog_list' %}" {% endif %}>
                                 Blog</a>
                         </li>
 
@@ -125,12 +125,37 @@
             <div class="right-side">
                 <!-- Header Widget -->
                 <div class="header-widget">
+
+                    {% if user.is_authenticated %}
+                    <!-- User Menu -->
+                    <div class="user-menu">
+                        <div class="user-name"><span><img src="{{user.profile.image.url}}" alt="profile"></span>Hi,
+                            {{user.username}}!
+                        </div>
+                        <ul>
+                            <li><a href=" {% url 'user_profile' %}"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                            <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
+                            <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Properties</a></li>
+
+                            <li>
+                                <a href="javascript:{document.getElementById('logout').submit()}">
+                                    <i class="sl sl-icon-power"></i> Log Out</a>
+                                </a>
+                                <form action="{% url 'logout' %}" method="POST" id="logout">
+                                    {% csrf_token %}
+                                    <input type="hidden">
+                                </form>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <a href="" class="button border">Submit Property</a>
+
+                    {% else %}
                     <a href="login-register.html" class="sign-in"> FOR RENT </a><a href="login-register.html"
                         class="sign-in">FOR SALE</a>
-
-
-
-                    <a href="submit-property.html" class="button border">Submit Property</a>
+                    <a href="{% url 'user_login' %}" class="button border">Submit Property</a>
+                    {% endif %}
                 </div>
                 <!-- Header Widget / End -->
             </div>

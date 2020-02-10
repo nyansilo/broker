@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block content %}
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>Log In & Register</h2>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li>Log In & Register</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Contact
+================================================== -->
+
+<!-- Container -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- Message Alert div -->
+            {%  include 'partials/_message_alert.html' %}
+            <!-- Message Alert div  -->
+
+            <!--Tab -->
+            <div class="my-account style-1 margin-top-5 margin-bottom-40">
+
+                <h3 class="headline centered margin-bottom-10 margin-top-10">Sign Up <span>Sign Up to submit
+                        properties</span></h3>
+
+                <div class="tabs-container alt">
+
+
+                    <!-- Register -->
+                    <div class="tab-content" id="tab2" style="display: none;">
+
+                        <form method="post" class="register">
+                            {% csrf_token %}
+
+
+
+                            <p class="form-row form-row-wide">
+                                {{ form|crispy }}
+                            </p>
+
+                            {% comment %}
+                            <p class="form-row form-row-wide">
+                                <label for="username2">Username:
+                                    <i class="im im-icon-Male"></i>
+                                    <input type="text" class="input-text" name="username" id="username2" value="" />
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="email2">Email Address:
+                                    <i class="im im-icon-Mail"></i>
+                                    <input type="text" class="input-text" name="email" id="email2" value="" />
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="password1">Password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    <input class="input-text" type="password" name="password1" id="password1" />
+                                </label>
+                            </p>
+                            {% endcomment %}
+
+
+
+                            <p class="form-row">
+                                <input type="submit" class="button border centered fw margin-top-10" name="register"
+                                    value="Register" />
+                            </p>
+                            <p class="lost_password">Already have an account?
+                                <a href="{% url 'user_login' %}" class="blue-text">Sign In</a>
+                            </p>
+
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <button class="button social-login via-gplus"><i class="fa fa-google-plus"></i> Log In With Google
+                Plus</button>
+            <button class="button social-login via-facebook"><i class="fa fa-facebook"></i> Log In With
+                Facebook</button>
+
+
+
+        </div>
+    </div>
+
+</div>
+<!-- Container / End -->
+
+
+{% endblock %}

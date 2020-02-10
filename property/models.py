@@ -4,21 +4,38 @@ from django.utils import timezone
 from django.utils.text import slugify
 from datetime import datetime
 from realtor.models import Realtor
+from django.urls import reverse
+from autoslug import AutoSlugField
 
 
 # Create your models here.
 PROPERTY_CATEGORY = (
+
+    ("Lands", "Lands"),
+    ("Apartments", "Apartments"),
+    ("Commercials", "Commercials"),
+    ("Vehicles", "Vehicles"),
+
+)
+
+PROPERTY_SUB_CATEGORY = (
     ("Plot", "Plot"),
+    ("Farm", "Farm"),
     ("Apartment", "Apartment"),
-    ("Frame", "Frame"),
-    ("Auto-Mobile", "Auto-Mobile"),
     ("House", "House"),
+    ("Room", "Room"),
+    ("Hostel", "Hostel"),
+    ("Office Place", "Office Place"),
+    ("Frame", "Frame"),
+    ("Car", "Car"),
+    ("Motorcycle", "Motorcycle"),
+    ("Bajaji", "Bajaji"),
 )
 
 
 PROPERTY_TYPE = (
     ("For Rent", "For Rent"),
-    ("For Sale", "For Sell"),
+    ("For Sale", "For Sale"),
 )
 
 
@@ -47,6 +64,7 @@ class Property(models.Model):
         upload_to='main_photo/%Y/%m/%d/', blank=True, null=True)
     #created = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
     created = models.DateTimeField(default=datetime.now)
     slug = models.SlugField(blank=True, null=True)
 
@@ -77,21 +95,27 @@ class PropertyImages(models.Model):
 
 
 class Category(models.Model):
-    # for product category
     category_name = models.CharField(max_length=50, choices=PROPERTY_CATEGORY)
+    slug = AutoSlugField(populate_from='category_name', null=True)
     #image = models.ImageField(upload_to='category/', blank=True, null=True)
-    """
-    slug = models.SlugField(blank=True  , null=True)
 
-
-    def save(self , *args , **kwargs):
-        if not self.slug and self.category_name :
-            self.slug = slugify(self.category_name)
-        super(Category , self).save(*args , **kwargs)
-    """
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.category_name
+
+
+class SubCategory(models.Model):
+    title = models.CharField(max_length=50, choices=PROPERTY_SUB_CATEGORY)
+    slug = AutoSlugField(populate_from='title', null=True)
+    created = models.DateTimeField(default=datetime.now)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'sub category'
+        verbose_name_plural = 'sub categories'
+
+    def __str__(self):
+        return self.title

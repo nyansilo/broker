@@ -4590,6 +4590,7 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 .no-arrows .slick-next { display: none !important; }
 
 .property-slider-container { position: relative; }
+/*
 .property-slider-container .agent-widget {
 	position: absolute;
 	top: 50%;
@@ -4597,6 +4598,15 @@ section.fullwidth.border-bottom { border-bottom: 1px solid #e4e4e4;}
 	transform: translateY(-50%);
 	z-index: 99;
 	width: 350px;
+}
+*/
+.property-slider-container .agent-widget {
+	position: absolute;
+	top: 22%;
+	right: 30px;
+	transform: translateY(-50%);
+	z-index: 99;
+	width: 320px;
 }
 
 .fullwidth-home-slider a.item,
@@ -12887,5 +12897,17 @@ body .daterangepicker .drp-buttons button.cancelBtn {
 	.property-slider .item,
 	.property-slider.default .item  { height: 200px; }
 }
+
+.fa-facebook-square {
+	color: #3b5998;
+	
+  }
+
+  .fa-twitter-square {
+	color:  #55acee;
+	
+  }
+ 
+  
 
 

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,11 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'accounts.apps.AccountsConfig',
+    'rest_framework',
+    'crispy_forms',
+    'sweetify',
     'front',
     'property',
     'realtor',
     'contact',
     'blog',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +144,61 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
+
+LOGIN_REDIRECT_URL = 'user_profile'
+LOGIN_URL = 'user_login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+EMAIL_HOST_USER = 'danielgeuza806@gmail.com'
+EMAIL_HOST_PASSWORD = 'scholar@1960'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "Contact email received from website"
+DEFAULT_FROM_EMAIL = 'danielgeuza806@gmail.com'
+
+print('email')
+print(EMAIL_HOST_USER)
+
+TINYMCE_DEFAULT_CONFIG = {
+    # 'height':360,
+    # 'width':970,
+    'cleanup_on_startup':
+    True,
+    'custom_undo_redo_levels':
+    20,
+    'selector':
+    'textarea',
+    'theme':
+    'modern',
+    'plugins':
+    '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1':
+    '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2':
+    '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu':
+    'formats | link image',
+    'menubar':
+    True,
+    'statusbar':
+    True,
+}

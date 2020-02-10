@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>Blog</h2>
+                <span>Keep up to date with the latest news</span>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li>Blog</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Content
+================================================== -->
+<div class="container">
+
+    <!-- Blog Posts -->
+    <div class="blog-page">
+        <div class="row">
+
+            <!-- Post Content -->
+            <div class="col-md-8">
+
+
+                <!-- Blog Post -->
+                <div class="blog-post single-post">
+
+                    <!-- Img -->
+                    <img class="post-img" src="{{ post_detail.thumbnail.url }}" alt="">
+
+
+                    <!-- Content -->
+                    <div class="post-content">
+                        <h3>{{ post_detail.title }}</h3>
+
+                        <ul class="post-meta">
+                            <li><i class="fa fa-clock-o"></i> {{ post_detail.timestamp|date:"F d, Y"}}</li>
+                            <li><a href="#"> <i class="fa fa-comments"></i> {{ post_detail.comment_count}} </a></li>
+                            <li><a href="#"> <i class="fa fa-eye"></i> {{ post_detail.view_count}} </a></li>
+                        </ul>
+
+                        <p>{{ post_detail.overview}}</p>
+
+                        <!-- Share Buttons -->
+                        <ul class="share-buttons margin-top-40 margin-bottom-0">
+                            <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+                            <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
+                            <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+                            <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+                <!-- Blog Post / End -->
+
+
+                <!-- Post Navigation -->
+                <ul id="posts-nav" class="margin-top-0 margin-bottom-40">
+
+                    {% if post_detail.next_post %}
+                    <li class="next-post">
+                        <a href="{{post_detail.next_post.get_absolute_url }}"><span>Next Post</span>
+                            {{post_detail.next_post.title}}</a>
+                    </li>
+                    {% endif %}
+
+                    {% if post_detail.previous_post %}
+                    <li class="prev-post">
+                        <a href="{{post_detail.previous_post.get_absolute_url }}"><span>Previous Post</span>
+                            {{post_detail.previous_post.title}}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <!-- Post Navigation / End -->
+
+                <!-- About Author -->
+                <div class="about-author">
+                    <img src="{{ post_detail.author.profile_picture.url }}" alt="" />
+                    <div class="about-description">
+                        <h4>{{post_detail.author.name}}</h4>
+                        <a href="#">{{post_detail.author.user.email}}</a>
+                        <p>{{post_detail.author.about_author}}</p>
+                    </div>
+                </div>
+                <!-- About Author /End-->
+
+
+                <!-- Related Posts -->
+                <div class="clearfix"></div>
+                <h4 class="headline margin-top-25">Related Posts</h4>
+                <div class="row">
+                    {% for post in post_related %}
+                    <div class="col-md-6">
+
+                        <!-- Blog Post -->
+                        <div class="blog-post">
+                            <!-- Img -->
+                            <a href="#" class="post-img">
+                                <img src="{{ post.thumbnail.url }}" alt="">
+                            </a>
+                            <!-- Content -->
+                            <div class="post-content">
+                                <h3><a href="#">{{post.title}}</a></h3>
+                                <p> {{ post.overview|truncatechars:60}}</p>
+
+                                <a href="{{ post.get_absolute_url }}" class="read-more">Read More <i
+                                        class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- Blog Post / End -->
+                    </div>
+
+                    {% empty %}
+                    <div class="col-md-6">
+                        <p>No Related Post</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Related Posts / End -->
+
+
+                <div class="margin-top-50"></div>
+
+                <!-- Reviews -->
+                <section class="comments">
+                    <h4 class="headline margin-bottom-35">Comments <span
+                            class="comments-amount">({{post_detail.comment_count}})</span></h4>
+
+                    <ul>
+
+                        {% for comment in post_detail.get_comments %}
+                        <li>
+                            <div class="avatar">
+                                {% if comment.user.author %}
+                                <img src="{{ comment.user.author.profile_picture.url }}" alt="" />
+                                {% else %}
+                                <img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
+                                    alt="" />
+                                {% endif %}
+                            </div>
+                            <div class="comment-content">
+                                <div class="arrow-comment"></div>
+                                <div class="comment-by">{{comment.user.username}}<span
+                                        class="date">{{comment.timestamp|date:"jS, M Y"}}</span>
+                                    <a href="#" class="reply"><i class="fa fa-reply"></i> Reply</a>
+                                </div>
+                                <p>{{comment.content}}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </section>
+                <div class="clearfix"></div>
+                <div class="margin-top-55"></div>
+
+
+                <!-- Add Comment -->
+                <h4 class="headline">Add Comment</h4>
+                <div class="margin-top-15"></div>
+                {% if request.user.is_authenticated %}
+                <!-- Add Comment Form -->
+                <form id="add-comment" class="add-comment" method="POST" action=".">
+                    <fieldset>
+                        {%csrf_token %}
+                        <div>
+                            {{ form }}
+                        </div>
+
+                    </fieldset>
+
+                    <button type="submit" class="button">Add Comment</button>
+                    <div class="clearfix"></div>
+                    <div class="margin-bottom-20"></div>
+
+                </form>
+                {% else %}
+
+                <a href="{% url 'user_login' %}" class="btn btn-primary">
+                    >> Login to comment << </a> {% endif %} </div> <!-- Post Content / End -->
+
+                        <!-- Sidebar Widgets -->
+                        {%  include 'blog/_sidebar.html' with category_count=category_count post_latest=post_latest %}
+                        <!-- Sidebar / End -->
+            </div>
+
+        </div>
+        <!-- Blog Posts /vend-->
+    </div>
+    <!-- class="container"/ end -->
+
+    {% endblock %}

@@ -18,14 +18,14 @@
 						<h2>Find Your Dream Home</h2>
 
 						<!-- Main Search -->
-						<form class="main-search-form">
+						<form class="main-search-form" method="GET" action="{% url 'property:property_search' %}">
 
 							<!-- Type -->
 							<div class="search-type">
-								<label class="active"><input class="first-tab" name="tab" checked="checked"
-										type="radio">Any Status</label>
-								<label><input name="tab" type="radio">For Sale</label>
-								<label><input name="tab" type="radio">For Rent</label>
+								<label class="active"><input class="first-tab" name="tab" checked="checked" type="radio"
+										value="Any Status">Any Status</label>
+								<label><input name="tab" type="radio" value="For Sale">For Sale</label>
+								<label><input name="tab" type="radio" value="For Rent"> For Rent</label>
 								<div class="search-type-arrow"></div>
 							</div>
 
@@ -35,7 +35,7 @@
 
 								<!-- Main Search Input -->
 								<div class="main-search-input larger-input">
-									<input type="text" class="ico-01" id="autocomplete-input"
+									<input type="text" class="ico-01" id="autocomplete-input" name="keyword"
 										placeholder="Enter address e.g. street, city and state or zip" value="" />
 									<button class="button">Search</button>
 								</div>
@@ -45,13 +45,12 @@
 
 									<!-- Property Type -->
 									<div class="col-md-4">
-										<select data-placeholder="Any Type" class="chosen-select-no-single">
+										<select data-placeholder="Any Type" class="chosen-select-no-single"
+											name="category">
 											<option>Any Type</option>
-											<option>Apartments</option>
-											<option>Houses</option>
-											<option>Commercial</option>
-											<option>Garages</option>
-											<option>Lots</option>
+											{% for key,value in type_choices.items %}
+											<option value="{{ key }}">{{ value }}</option>
+											{% endfor %}
 										</select>
 									</div>
 
@@ -61,7 +60,7 @@
 
 										<!-- Select Input -->
 										<div class="select-input">
-											<input type="text" placeholder="Min Price" data-unit="USD">
+											<input type="text" placeholder="Min Price" data-unit="USD" name="min_price">
 										</div>
 										<!-- Select Input / End -->
 
@@ -73,7 +72,7 @@
 
 										<!-- Select Input -->
 										<div class="select-input">
-											<input type="text" placeholder="Max Price" data-unit="USD">
+											<input type="text" placeholder="Max Price" data-unit="USD" name="max_price">
 										</div>
 										<!-- Select Input / End -->
 
@@ -93,23 +92,25 @@
 										<!-- Row -->
 										<div class="row with-forms">
 
-											<!-- Min Price -->
+											<!-- Min Area -->
 											<div class="col-md-6">
 
 												<!-- Select Input -->
 												<div class="select-input">
-													<input type="text" placeholder="Min Area" data-unit="Sq Ft">
+													<input type="text" placeholder="Min Area" data-unit="Sq Ft"
+														name="min_area">
 												</div>
 												<!-- Select Input / End -->
 
 											</div>
 
-											<!-- Max Price -->
+											<!-- Max Area -->
 											<div class="col-md-6">
 
 												<!-- Select Input -->
 												<div class="select-input">
-													<input type="text" placeholder="Max Area" data-unit="Sq Ft">
+													<input type="text" placeholder="Max Area" data-unit="Sq Ft"
+														name="max_area">
 												</div>
 												<!-- Select Input / End -->
 
@@ -122,63 +123,33 @@
 										<!-- Row -->
 										<div class="row with-forms">
 
-											<!-- Min Area -->
+											<!-- Bed -->
 											<div class="col-md-6">
-												<select data-placeholder="Beds" class="chosen-select-no-single">
+												<select data-placeholder="Beds" class="chosen-select-no-single"
+													name="bed">
 													<option label="blank"></option>
 													<option>Beds (Any)</option>
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													{% for key,value in bedroom_choices.items %}
+													<option value="{{ key }}">{{ value }}</option>
+													{% endfor %}>
 												</select>
 											</div>
 
-											<!-- Max Area -->
+											<!-- Bath -->
 											<div class="col-md-6">
-												<select data-placeholder="Baths" class="chosen-select-no-single">
+												<select data-placeholder="Baths" class="chosen-select-no-single"
+													name="bath">
 													<option label="blank"></option>
 													<option>Baths (Any)</option>
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
+													{% for key,value in bathroom_choices.items %}
+													<option value="{{ key }}">{{ value }}</option>
+													{% endfor %}
 												</select>
 											</div>
 
 										</div>
 										<!-- Row / End -->
 
-
-										<!-- Checkboxes -->
-										<div class="checkboxes in-row">
-
-											<input id="check-2" type="checkbox" name="check">
-											<label for="check-2">Air Conditioning</label>
-
-											<input id="check-3" type="checkbox" name="check">
-											<label for="check-3">Swimming Pool</label>
-
-											<input id="check-4" type="checkbox" name="check">
-											<label for="check-4">Central Heating</label>
-
-											<input id="check-5" type="checkbox" name="check">
-											<label for="check-5">Laundry Room</label>
-
-
-											<input id="check-6" type="checkbox" name="check">
-											<label for="check-6">Gym</label>
-
-											<input id="check-7" type="checkbox" name="check">
-											<label for="check-7">Alarm</label>
-
-											<input id="check-8" type="checkbox" name="check">
-											<label for="check-8">Window Covering</label>
-
-										</div>
-										<!-- Checkboxes / End -->
 
 									</div>
 								</div>

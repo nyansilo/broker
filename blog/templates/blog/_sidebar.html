@@ -1,0 +1,102 @@
+<!-- Side Bar Widgets  -->
+<div class="col-md-4">
+    <div class="sidebar right">
+
+        <!-- Widget -->
+        <div class="widget">
+            <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
+            <form action="{% url 'blog:post_search' %}" method="GET">
+                <div class="search-blog-input">
+                    <div class="input"><input class="search-field" name="q" type="text" placeholder="Type and hit enter"
+                            value="" /></div>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Widget / End -->
+
+
+        <!-- Widget -->
+        <div class="widget">
+            <h3>Got any questions?</h3>
+            <div class="info-box margin-bottom-10">
+                <p>If you are having any questions, please feel free to ask.</p>
+                <a href="{% url 'front:contact' %}" class="button fullwidth margin-top-20"><i
+                        class="fa fa-envelope-o"></i> Drop Us a Line</a>
+            </div>
+        </div>
+        <!-- Widget / End -->
+
+
+        <!-- Widget -->
+        <div class="widget">
+
+            <h3>Popular Posts</h3>
+            <ul class="widget-tabs">
+
+                {% for latest in post_latest %}
+
+                <!-- Post #1 -->
+                <li>
+                    <div class="widget-content">
+                        <div class="widget-thumb">
+                            <a href="{{ latest.get_absolute_url }}"><img src="{{ latest.thumbnail.url }}" alt=""></a>
+                        </div>
+
+                        <div class="widget-text">
+                            <h5><a href="{{ latest.get_absolute_url }}">{{ latest.title|truncatechars:35}}</a>
+                            </h5>
+
+                            <span><i class="fa fa-eye"></i> {{ latest.view_count}} |
+                                <i class="fa fa-comments"></i> {{ latest.comments.count}} </span>
+
+                            <div class="clearfix"></div>
+                        </div>
+                </li>
+                {% endfor %}
+
+
+            </ul>
+
+        </div>
+        <!-- Widget / End-->
+
+
+        <!-- Widget -->
+        <div class="widget margin-bottom-40">
+            <h3 class="margin-top-0 margin-bottom-35">All Post Categories</h3>
+
+            <!-- Row Categories -->
+            <div class="row with-forms">
+                {% for cat in category_count %}
+                <!-- Status -->
+                <div class="col-md-12">
+                    <a href="#" class="button fullwidth border">{{ cat.categories__title }}
+                        <span>({{ cat.categories__title__count }})</span></a>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Row / End -->
+        </div>
+        <!-- Widget / End -->
+
+
+
+        <!-- Widget -->
+        <div class="widget">
+            <h3 class="margin-top-0 margin-bottom-25">Social</h3>
+            <ul class="social-icons rounded">
+                <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
+            </ul>
+
+        </div>
+        <!-- Widget / End-->
+
+        <div class="clearfix"></div>
+        <div class="margin-bottom-40"></div>
+    </div>
+</div>
+<!-- Sidebar / End -->
