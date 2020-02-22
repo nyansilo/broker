@@ -157,7 +157,7 @@ EMAIL_USE_TLS = True
 #EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 #EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 EMAIL_HOST_USER = 'danielgeuza806@gmail.com'
-EMAIL_HOST_PASSWORD = 'scholar@1960'
+EMAIL_HOST_PASSWORD = ''
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "Contact email received from website"
 DEFAULT_FROM_EMAIL = 'danielgeuza806@gmail.com'
 
